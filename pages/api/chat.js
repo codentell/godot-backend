@@ -3,8 +3,9 @@ import Cors from 'cors';
 
 
 const cors = Cors({
-  origin: "*",
-  methods: ["POST", "GET", "OPTIONS", "HEAD"],
+  origin: 'https://hello-test-godot.vercel.app', // Replace with your frontend URL
+  methods: ['POST', 'GET', 'OPTIONS', 'HEAD'],
+  credentials: true, // Allow credentials if needed
 });
 
 function runMiddleware(
@@ -29,6 +30,15 @@ const openai = new OpenAI({
 });
 
 export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', 'https://hello-test-godot.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, HEAD');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    return res.status(200).end(); // End the preflight request
+  }
+
+  // Enforce POST method
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
