@@ -1,4 +1,26 @@
 import OpenAI from 'openai';
+import Cors from 'cors';
+
+
+const cors = Cors({
+  methods: ["POST", "GET", "HEAD"],
+});
+
+function runMiddleware(
+  req,
+  res,
+  fn
+) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // API key from environment variable
@@ -9,6 +31,8 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
+
+  await runMiddleware(req, res, cors);
 
   try {
     const { prompt } = req.body;
