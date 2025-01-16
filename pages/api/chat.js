@@ -65,7 +65,7 @@ export default async function handler(req, res) {
 
     const sentiment = await openai.chat.completions.create({
       model: "meta/llama-3.3-70b-instruct",
-      messages: [{ role: "user", content: "Get me the sentiment score of the prompt rating -5 to positive 5" }],
+      messages: [{ role: "user", content: `Get me the sentiment score of the prompt rating -5 to positive 5: ${prompt} just only the number.` }],
       temperature: 0.2,
       top_p: 0.7,
       max_tokens: 1024,
