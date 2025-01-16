@@ -62,8 +62,25 @@ export default async function handler(req, res) {
       stream: false, // Change to true if you want to stream data
     });
 
+
+    const sentiment = await openai.chat.completions.create({
+      model: "meta/llama-3.3-70b-instruct",
+      messages: [{ role: "user", content: "Get me the sentiment score of the prompt rating -5 to positive 5" }],
+      temperature: 0.2,
+      top_p: 0.7,
+      max_tokens: 1024,
+      stream: false, // Change to true if you want to stream data
+    });
+
     // Send the response back to the client
-    res.status(200).json({ completion: completion.choices[0]?.message?.content });
+    // Katherine 
+
+    
+
+    // Gunter 
+    // Dave 
+
+    res.status(200).json({ completion: completion.choices[0]?.message?.content, sentiment: sentiment.choices[0]?.message?.content  });
 
   } catch (error) {
     console.error(error);
