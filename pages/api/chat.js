@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     
 
 
-    let NPCTemplate = f```
+    let NPCTemplate = ```
     # Gunter Erikson
 
     ## Likes
