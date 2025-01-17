@@ -47,6 +47,7 @@ export default async function handler(req, res) {
 
   try {
     const { prompt } = req.body;
+    const { score } = req.body; 
     console.log(prompt)
 
     if (!prompt) {
@@ -72,15 +73,22 @@ export default async function handler(req, res) {
       stream: false, // Change to true if you want to stream data
     });
 
-    // Send the response back to the client
-    // Katherine 
+
+
+    let total_score = (score + parseFloat(sentiment.choices[0]?.message?.content))
 
     
 
+    
+
+
+
+    // Send the response back to the client
+    // Katherine 
     // Gunter 
     // Dave 
 
-    res.status(200).json({ completion: completion.choices[0]?.message?.content, sentiment: sentiment.choices[0]?.message?.content  });
+    res.status(200).json({ completion: completion.choices[0]?.message?.content, sentiment: sentiment.choices[0]?.message?.content, score: total_score });
 
   } catch (error) {
     console.error(error);
