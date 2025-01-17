@@ -121,7 +121,7 @@ export default async function handler(req, res) {
     // Gunter 
     // Dave 
 
-    res.status(200).json({ completion: completion.choices[0]?.message?.content, sentiment: sentiment.choices[0]?.message?.content, score: total_score });
+    res.status(200).json({ completion: completion.choices[0]?.message?.content, sentiment: parseFloat(sentiment.choices[0]?.message?.content), score: total_score });
 
   } catch (error) {
     console.error(error);
